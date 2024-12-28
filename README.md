@@ -31,6 +31,19 @@ uv pip install docowling
 
 Works on macOS, Linux and Windows environments. Both x86_64 and arm64 architectures.
 
+## Getting started
+
+To convert individual documents, use `convert()`, for example:
+
+```python
+from docowling.document_converter import DocumentConverter
+
+source = "https://arxiv.org/pdf/2408.09869"  # document per local path or URL
+converter = DocumentConverter()
+result = converter.convert(source)
+print(result.document.export_to_markdown())  # output: "## Docling Technical Report[...]"
+```
+
 ## License
 
 The Docowling codebase is under MIT license.
