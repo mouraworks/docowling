@@ -56,7 +56,7 @@ err_console = Console(stderr=True)
 
 
 app = typer.Typer(
-    name="Docling",
+    name="Docowling",
     no_args_is_help=True,
     add_completion=False,
     pretty_exceptions_enable=False,
@@ -65,7 +65,7 @@ app = typer.Typer(
 
 def version_callback(value: bool):
     if value:
-        docling_version = importlib.metadata.version("docling")
+        docling_version = importlib.metadata.version("docowling")
         docling_core_version = importlib.metadata.version("docling-core")
         docling_ibm_models_version = importlib.metadata.version("docling-ibm-models")
         docling_parse_version = importlib.metadata.version("docling-parse")
