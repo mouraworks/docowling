@@ -1,5 +1,5 @@
 import csv
-from io import StringIO
+from io import BytesIO, StringIO
 from pathlib import Path
 from typing import Dict, List, Set, Tuple, Union
 
@@ -17,16 +17,20 @@ from docowling.datamodel.document import InputDocument
 
 
 class CsvDocumentBackend(DeclarativeDocumentBackend):
-    def __init__(self, in_doc: "InputDocument", path_or_stream: Union[StringIO, Path]):
+    def __init__(self, in_doc: "InputDocument", path_or_stream: Union[BytesIO, Path]):
         super().__init__(in_doc, path_or_stream)
         self.rows = []
+        self.parents: Dict[int, str] = {}  # Add parents dictionary
+
         try:
             # Load the CSV data
             if isinstance(self.path_or_stream, Path):
                 with self.path_or_stream.open(mode="r", encoding="utf-8") as file:
                     self.rows = list(csv.reader(file))
-            elif isinstance(self.path_or_stream, StringIO):
-                self.rows = list(csv.reader(self.path_or_stream))
+            elif isinstance(self.path_or_stream, BytesIO):
+                # Convert BytesIO to StringIO for CSV reading
+                text_content = self.path_or_stream.read().decode("utf-8")
+                self.rows = list(csv.reader(StringIO(text_content)))
 
             self.valid = True
         except Exception as e:
