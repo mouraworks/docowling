@@ -3,6 +3,7 @@ from io import BytesIO, StringIO
 from pathlib import Path
 from typing import Dict, List, Set, Tuple, Union
 
+from docling_core.types.doc import GroupItem  # Add this import
 from docling_core.types.doc import (
     DoclingDocument,
     DocumentOrigin,
@@ -20,7 +21,7 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
     def __init__(self, in_doc: "InputDocument", path_or_stream: Union[BytesIO, Path]):
         super().__init__(in_doc, path_or_stream)
         self.rows = []
-        self.parents: Dict[int, str] = {}  # Add parents dictionary
+        self.parents: Dict[int, GroupItem] = {}  # Update type hint to GroupItem
 
         try:
             # Load the CSV data
@@ -75,11 +76,12 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
             return doc  # No data to process
 
         # Create a section for the CSV data
-        self.parents[0] = doc.add_group(
+        group_item = doc.add_group(
             parent=None,
             label=GroupLabel.SECTION,
             name="CSV Data",
         )
+        self.parents[0] = group_item
 
         # Convert rows into table data
         num_rows = len(self.rows)
