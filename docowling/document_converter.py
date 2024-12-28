@@ -59,9 +59,11 @@ class ExcelFormatOption(FormatOption):
     pipeline_cls: Type = SimplePipeline
     backend: Type[AbstractDocumentBackend] = MsExcelDocumentBackend
 
+
 class CsvFormatOption(FormatOption):
     pipeline_cls: Type = SimplePipeline
     backend: Type[AbstractDocumentBackend] = CsvDocumentBackend
+
 
 class WordFormatOption(FormatOption):
     pipeline_cls: Type = SimplePipeline
@@ -285,7 +287,6 @@ class DocumentConverter:
     def _process_document(
         self, in_doc: InputDocument, raises_on_error: bool
     ) -> ConversionResult:
-
         valid = (
             self.allowed_formats is not None and in_doc.format in self.allowed_formats
         )

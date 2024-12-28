@@ -40,7 +40,11 @@ from docowling.datamodel.pipeline_options import (
     TesseractOcrOptions,
 )
 from docowling.datamodel.settings import settings
-from docowling.document_converter import DocumentConverter, FormatOption, PdfFormatOption
+from docowling.document_converter import (
+    DocumentConverter,
+    FormatOption,
+    PdfFormatOption,
+)
 
 warnings.filterwarnings(action="ignore", category=UserWarning, module="pydantic|torch")
 warnings.filterwarnings(action="ignore", category=FutureWarning, module="easyocr")
@@ -82,7 +86,6 @@ def export_documents(
     export_doctags: bool,
     image_export_mode: ImageRefMode,
 ):
-
     success_count = 0
     failure_count = 0
 
