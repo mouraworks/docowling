@@ -1,15 +1,16 @@
 import csv
 from io import StringIO
 from pathlib import Path
-from typing import Union, Dict, Tuple, List, Set
+from typing import Dict, List, Set, Tuple, Union
 
 from docling_core.types.doc import (
     DoclingDocument,
     DocumentOrigin,
     GroupLabel,
-    TableData,
     TableCell,
+    TableData,
 )
+
 from docowling.backend.abstract_backend import DeclarativeDocumentBackend
 from docowling.datamodel.base_models import InputFormat
 from docowling.datamodel.document import InputDocument
