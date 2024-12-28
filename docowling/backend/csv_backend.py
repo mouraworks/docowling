@@ -1,7 +1,7 @@
 import csv
 from io import StringIO
 from pathlib import Path
-from typing import Union, Dict, Tuple, List
+from typing import Union, Dict, Tuple, List, Set
 
 from docling_core.types.doc import (
     DoclingDocument,
