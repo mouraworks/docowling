@@ -4,25 +4,25 @@ repos:
     hooks:
       - id: black
         name: Black
-        entry: poetry run black docling docs/examples tests
+        entry: poetry run black docowling docs/examples tests
         pass_filenames: false
         language: system
         files: '\.py$'
       - id: isort
         name: isort
-        entry: poetry run isort docling docs/examples tests
+        entry: poetry run isort docowling docs/examples tests
         pass_filenames: false
         language: system
         files: '\.py$'
 #      - id: flake8
 #        name: flake8
-#        entry: poetry run flake8 docling
+#        entry: poetry run flake8 docowling
 #        pass_filenames: false
 #        language: system
 #        files: '\.py$'
       - id: mypy
         name: MyPy
-        entry: poetry run mypy docling
+        entry: poetry run mypy docowling
         pass_filenames: false
         language: system
         files: '\.py$'

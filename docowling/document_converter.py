@@ -9,11 +9,11 @@ from pydantic import BaseModel, ConfigDict, model_validator, validate_call
 
 from docowling.backend.abstract_backend import AbstractDocumentBackend
 from docowling.backend.asciidoc_backend import AsciiDocBackend
+from docowling.backend.csv_backend import CsvDocumentBackend
 from docowling.backend.docling_parse_v2_backend import DoclingParseV2DocumentBackend
 from docowling.backend.html_backend import HTMLDocumentBackend
 from docowling.backend.md_backend import MarkdownDocumentBackend
 from docowling.backend.msexcel_backend import MsExcelDocumentBackend
-from docowling.backend.csv_backend import CsvDocumentBackend
 from docowling.backend.mspowerpoint_backend import MsPowerpointDocumentBackend
 from docowling.backend.msword_backend import MsWordDocumentBackend
 from docowling.backend.xml.pubmed_backend import PubMedDocumentBackend
@@ -59,9 +59,11 @@ class ExcelFormatOption(FormatOption):
     pipeline_cls: Type = SimplePipeline
     backend: Type[AbstractDocumentBackend] = MsExcelDocumentBackend
 
+
 class CsvFormatOption(FormatOption):
     pipeline_cls: Type = SimplePipeline
     backend: Type[AbstractDocumentBackend] = CsvDocumentBackend
+
 
 class WordFormatOption(FormatOption):
     pipeline_cls: Type = SimplePipeline
@@ -285,7 +287,6 @@ class DocumentConverter:
     def _process_document(
         self, in_doc: InputDocument, raises_on_error: bool
     ) -> ConversionResult:
-
         valid = (
             self.allowed_formats is not None and in_doc.format in self.allowed_formats
         )

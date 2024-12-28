@@ -15,8 +15,8 @@ assignees: ''
 <!-- Describe the sequence of steps for reproducing the bug. -->
 ...
 
-### Docling version
-<!-- Copy the output of `docling --version`. -->
+### Docowling version
+<!-- Copy the output of `docowling --version`. -->
 ...
 
 ### Python version

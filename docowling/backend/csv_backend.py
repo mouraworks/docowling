@@ -1,31 +1,37 @@
 import csv
-from io import StringIO
+from io import BytesIO, StringIO
 from pathlib import Path
-from typing import Union, Dict, Tuple, List
+from typing import Dict, List, Set, Tuple, Union
 
+from docling_core.types.doc import GroupItem  # Add this import
 from docling_core.types.doc import (
     DoclingDocument,
     DocumentOrigin,
     GroupLabel,
-    TableData,
     TableCell,
+    TableData,
 )
+
 from docowling.backend.abstract_backend import DeclarativeDocumentBackend
 from docowling.datamodel.base_models import InputFormat
 from docowling.datamodel.document import InputDocument
 
 
 class CsvDocumentBackend(DeclarativeDocumentBackend):
-    def __init__(self, in_doc: "InputDocument", path_or_stream: Union[StringIO, Path]):
+    def __init__(self, in_doc: "InputDocument", path_or_stream: Union[BytesIO, Path]):
         super().__init__(in_doc, path_or_stream)
         self.rows = []
+        self.parents: Dict[int, GroupItem] = {}  # Update type hint to GroupItem
+
         try:
             # Load the CSV data
             if isinstance(self.path_or_stream, Path):
                 with self.path_or_stream.open(mode="r", encoding="utf-8") as file:
                     self.rows = list(csv.reader(file))
-            elif isinstance(self.path_or_stream, StringIO):
-                self.rows = list(csv.reader(self.path_or_stream))
+            elif isinstance(self.path_or_stream, BytesIO):
+                # Convert BytesIO to StringIO for CSV reading
+                text_content = self.path_or_stream.read().decode("utf-8")
+                self.rows = list(csv.reader(StringIO(text_content)))
 
             self.valid = True
         except Exception as e:
@@ -70,11 +76,12 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
             return doc  # No data to process
 
         # Create a section for the CSV data
-        self.parents[0] = doc.add_group(
+        group_item = doc.add_group(
             parent=None,
             label=GroupLabel.SECTION,
             name="CSV Data",
         )
+        self.parents[0] = group_item
 
         # Convert rows into table data
         num_rows = len(self.rows)

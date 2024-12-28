@@ -1,7 +1,7 @@
-site_name: Docling
-site_url: https://ds4sd.github.io/docling/
-repo_name: DS4SD/docling
-repo_url: https://github.com/DS4SD/docling
+site_name: Docowling
+site_url: https://github.com/mouraworks/docowling/
+repo_name: mouraworks/docowling
+repo_url: https://github.com/mouraworks/docowling/
 
 theme:
   name: material
@@ -53,15 +53,15 @@ theme:
     - toc.follow
 nav:
   - Home:
-    - "Docling": index.md
+    - "Docowling": index.md
     - Installation: installation.md
     - Usage: usage.md
     - FAQ: faq.md
-    - Docling v2: v2.md
+    - Docowling v2: v2.md
   - Concepts:
     - Concepts: concepts/index.md
     - Architecture: concepts/architecture.md
-    - Docling Document: concepts/docling_document.md
+    - Docowling Document: concepts/docling_document.md
     - Chunking: concepts/chunking.md
   - Examples:
     - Examples: examples/index.md
@@ -104,7 +104,7 @@ nav:
     - Python API:
       - Document Converter: reference/document_converter.md
       - Pipeline options: reference/pipeline_options.md
-      - Docling Document: reference/docling_document.md
+      - Docowling Document: reference/docling_document.md
     - CLI:
       - CLI reference: reference/cli.md
 

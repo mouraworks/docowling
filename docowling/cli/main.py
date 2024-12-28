@@ -40,7 +40,11 @@ from docowling.datamodel.pipeline_options import (
     TesseractOcrOptions,
 )
 from docowling.datamodel.settings import settings
-from docowling.document_converter import DocumentConverter, FormatOption, PdfFormatOption
+from docowling.document_converter import (
+    DocumentConverter,
+    FormatOption,
+    PdfFormatOption,
+)
 
 warnings.filterwarnings(action="ignore", category=UserWarning, module="pydantic|torch")
 warnings.filterwarnings(action="ignore", category=FutureWarning, module="easyocr")
@@ -52,7 +56,7 @@ err_console = Console(stderr=True)
 
 
 app = typer.Typer(
-    name="Docling",
+    name="Docowling",
     no_args_is_help=True,
     add_completion=False,
     pretty_exceptions_enable=False,
@@ -61,7 +65,7 @@ app = typer.Typer(
 
 def version_callback(value: bool):
     if value:
-        docling_version = importlib.metadata.version("docling")
+        docling_version = importlib.metadata.version("docowling")
         docling_core_version = importlib.metadata.version("docling-core")
         docling_ibm_models_version = importlib.metadata.version("docling-ibm-models")
         docling_parse_version = importlib.metadata.version("docling-parse")
@@ -82,7 +86,6 @@ def export_documents(
     export_doctags: bool,
     image_export_mode: ImageRefMode,
 ):
-
     success_count = 0
     failure_count = 0
 
