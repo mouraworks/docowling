@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/mouraworks/docowling">
-    <img loading="lazy" alt="Docling" src="https://github.com/mouraworks/docowling/blob/main/docs/assets/docowling.png" width="80%"/>
+    <img loading="lazy" alt="Docowling" src="https://github.com/mouraworks/docowling/raw/main/docs/assets/docowling.png" width="80%"/>
   </a>
 </p>
 
@@ -17,6 +17,19 @@
 [![License MIT](https://img.shields.io/github/license/mouraworks/docowling/)](https://opensource.org/licenses/MIT)
 
 **Docowling**  is a fork of the [Docling](https://github.com/DS4SD/docling), an IBM project, developed to enhance functionalities and add new document processing capabilities.
+
+## Installation
+
+To use Docowling, simply install `docowling` from your package manager, e.g. pip or uv:
+```bash
+pip install docowling
+```
+
+```bash
+uv pip install docowling
+```
+
+Works on macOS, Linux and Windows environments. Both x86_64 and arm64 architectures.
 
 ## License
 
