@@ -7,8 +7,8 @@
 # Docowling
 
 [![Docs](https://img.shields.io/badge/docs-live-brightgreen)](https://github.com/mouraworks/docowling/)
-[![PyPI version](https://img.shields.io/pypi/v/docling)](https://pypi.org/project/docowling/)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/docling)](https://pypi.org/project/docling/)
+[![PyPI version](https://img.shields.io/pypi/v/docowling)](https://pypi.org/project/docowling/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/docowling)](https://pypi.org/project/docowling/)
 [![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
@@ -41,7 +41,7 @@ from docowling.document_converter import DocumentConverter
 source = "https://arxiv.org/pdf/2408.09869"  # document per local path or URL
 converter = DocumentConverter()
 result = converter.convert(source)
-print(result.document.export_to_markdown())  # output: "## Docling Technical Report[...]"
+print(result.document.export_to_markdown())  # output: "## Docowling Technical Report[...]"
 ```
 
 ## License
