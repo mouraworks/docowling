@@ -293,7 +293,7 @@ class DocumentConverter:
         if valid:
             conv_res = self._execute_pipeline(in_doc, raises_on_error=raises_on_error)
         else:
-            error_message = f"File format not allowed: {in_doc.file}"
+            error_message = f"File format not allowed: {in_doc.format}"
             if raises_on_error:
                 raise ConversionError(error_message)
             else:
