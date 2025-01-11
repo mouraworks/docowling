@@ -25,7 +25,7 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
         super().__init__(in_doc, path_or_stream)
         self.rows: List[List[str]] = []
         self.valid = False
-        self.file: Optional[Path] = (
+        self.file: Optional[PurePath] = (
             Path(path_or_stream) if isinstance(path_or_stream, Path) else None
         )
         self.encoding = "utf-8"
@@ -97,12 +97,14 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
         """
         try:
             if not content.strip():
-                return csv.excel
+                # Retornando uma instância em vez do type
+                return csv.excel()
 
             sample_size = min(len(content), 4096)
             sample = content[:sample_size]
             sniffer = csv.Sniffer()
 
+            # O sniff já retorna uma instância do dialect, então está correto
             dialect = sniffer.sniff(sample, delimiters=",;\t|")
             _log.info(f"Detected delimiter: {dialect.delimiter}")
             return dialect
@@ -110,7 +112,8 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
             _log.warning(
                 f"Failed to detect CSV dialect: {e}. Falling back to comma delimiter."
             )
-            return csv.excel
+            # Retornando uma instância em vez do type
+            return csv.excel()
 
     def _parse_csv(self, content: str, dialect: csv.Dialect) -> List[List[str]]:
         """
