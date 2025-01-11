@@ -2,7 +2,7 @@ import csv
 import logging
 from io import BytesIO, StringIO
 from pathlib import Path
-from typing import Dict, List, Set, Union
+from typing import Dict, List, Optional, Set, Union
 
 import chardet
 from docling_core.types.doc import (
@@ -23,9 +23,11 @@ _log = logging.getLogger(__name__)
 class CsvDocumentBackend(DeclarativeDocumentBackend):
     def __init__(self, in_doc: "InputDocument", path_or_stream: Union[BytesIO, Path]):
         super().__init__(in_doc, path_or_stream)
-        self.rows = []
+        self.rows: List[List[str]] = []
         self.valid = False
-        self.file = path_or_stream if isinstance(path_or_stream, Path) else None
+        self.file: Optional[Path] = (
+            path_or_stream if isinstance(path_or_stream, Path) else None
+        )
         self.encoding = "utf-8"
 
         try:
@@ -96,14 +98,12 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
         """
         try:
             if not content.strip():
-                return csv.excel
+                return csv.excel()
 
-            # Try to detect the dialect using a larger sample for files with long headers
-            sample_size = min(len(content), 4096)  # Use up to 4KB as sample
+            sample_size = min(len(content), 4096)
             sample = content[:sample_size]
             sniffer = csv.Sniffer()
 
-            # Try with common delimiters first
             dialect = sniffer.sniff(sample, delimiters=",;\t|")
             _log.info(f"Detected delimiter: {dialect.delimiter}")
             return dialect
@@ -111,7 +111,7 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
             _log.warning(
                 f"Failed to detect CSV dialect: {e}. Falling back to comma delimiter."
             )
-            return csv.excel
+            return csv.excel()
 
     def _parse_csv(self, content: str, dialect: csv.Dialect) -> List[List[str]]:
         """
