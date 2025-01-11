@@ -225,7 +225,6 @@ class _DummyBackend(AbstractDocumentBackend):
 
 
 class _DocumentConversionInput(BaseModel):
-
     path_or_stream_iterator: Iterable[Union[Path, str, DocumentStream]]
     limits: Optional[DocumentLimits] = DocumentLimits()
 
@@ -238,7 +237,7 @@ class _DocumentConversionInput(BaseModel):
             backend: Type[AbstractDocumentBackend]
             if format not in format_options.keys():
                 _log.error(
-                    f"Input document {obj.name} does not match any allowed format."
+                    f'The input document "{obj.name}" with format "{format}" does not match any of the permitted formats.'
                 )
                 backend = _DummyBackend
             else:
@@ -345,6 +344,8 @@ class _DocumentConversionInput(BaseModel):
             mime = FormatToMimeType[InputFormat.HTML][0]
         elif ext in FormatToExtensions[InputFormat.MD]:
             mime = FormatToMimeType[InputFormat.MD][0]
+        elif ext in FormatToExtensions[InputFormat.CSV]:
+            mime = FormatToMimeType[InputFormat.CSV][0]
         return mime
 
     @staticmethod
