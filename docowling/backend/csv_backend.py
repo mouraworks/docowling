@@ -2,7 +2,7 @@ import csv
 import logging
 from io import BytesIO, StringIO
 from pathlib import Path, PurePath
-from typing import Dict, List, Optional, Set, Union
+from typing import Dict, List, Optional, Set, Union, cast
 
 import chardet
 from docling_core.types.doc import (
@@ -25,8 +25,8 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
         super().__init__(in_doc, path_or_stream)
         self.rows: List[List[str]] = []
         self.valid = False
-        self.file: Optional[PurePath] = (
-            PurePath(str(path_or_stream)) if isinstance(path_or_stream, Path) else None
+        self.file: PurePath = (
+            PurePath(str(path_or_stream)) if isinstance(path_or_stream, Path) else PurePath()
         )
         self.encoding = "utf-8"
 
