@@ -1,7 +1,7 @@
 import csv
 import logging
 from io import BytesIO, StringIO
-from pathlib import Path
+from pathlib import Path, PurePath
 from typing import Dict, List, Optional, Set, Union
 
 import chardet
@@ -26,7 +26,7 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
         self.rows: List[List[str]] = []
         self.valid = False
         self.file: Optional[PurePath] = (
-            Path(path_or_stream) if isinstance(path_or_stream, Path) else None
+            PurePath(str(path_or_stream)) if isinstance(path_or_stream, Path) else None
         )
         self.encoding = "utf-8"
 
@@ -104,15 +104,11 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
             sample = content[:sample_size]
             sniffer = csv.Sniffer()
 
-            # O sniff já retorna uma instância do dialect, então está correto
-            dialect = sniffer.sniff(sample, delimiters=",;\t|")
-            _log.info(f"Detected delimiter: {dialect.delimiter}")
-            return dialect
+            return cast(csv.Dialect, sniffer.sniff(sample, delimiters=",;\t|"))
         except Exception as e:
             _log.warning(
                 f"Failed to detect CSV dialect: {e}. Falling back to comma delimiter."
             )
-            # Retornando uma instância em vez do type
             return csv.excel()
 
     def _parse_csv(self, content: str, dialect: csv.Dialect) -> List[List[str]]:
