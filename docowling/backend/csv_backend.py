@@ -26,7 +26,7 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
         self.rows: List[List[str]] = []
         self.valid = False
         self.file: Optional[Path] = (
-            path_or_stream if isinstance(path_or_stream, Path) else None
+            Path(path_or_stream) if isinstance(path_or_stream, Path) else None
         )
         self.encoding = "utf-8"
 
@@ -78,14 +78,13 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
         Falls back to utf-8 if detection fails.
         """
         try:
-            # Remove BOM if present
             if raw_content.startswith(b"\xef\xbb\xbf"):
                 raw_content = raw_content[3:]
                 return "utf-8"
 
             result = chardet.detect(raw_content)
-            if result["confidence"] > 0.7:
-                return result["encoding"]
+            if result and result.get("confidence", 0) > 0.7 and result.get("encoding"):
+                return str(result["encoding"])
             return "utf-8"
         except Exception as e:
             _log.warning(f"Failed to detect encoding: {e}. Falling back to UTF-8.")
@@ -98,7 +97,7 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
         """
         try:
             if not content.strip():
-                return csv.excel()
+                return csv.excel
 
             sample_size = min(len(content), 4096)
             sample = content[:sample_size]
@@ -111,7 +110,7 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
             _log.warning(
                 f"Failed to detect CSV dialect: {e}. Falling back to comma delimiter."
             )
-            return csv.excel()
+            return csv.excel
 
     def _parse_csv(self, content: str, dialect: csv.Dialect) -> List[List[str]]:
         """
