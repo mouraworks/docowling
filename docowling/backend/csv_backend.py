@@ -26,7 +26,9 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
         self.rows: List[List[str]] = []
         self.valid = False
         self.file: PurePath = (
-            PurePath(str(path_or_stream)) if isinstance(path_or_stream, Path) else PurePath()
+            PurePath(str(path_or_stream))
+            if isinstance(path_or_stream, Path)
+            else PurePath()
         )
         self.encoding = "utf-8"
 
