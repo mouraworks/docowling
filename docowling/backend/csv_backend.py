@@ -22,6 +22,11 @@ _log = logging.getLogger(__name__)
 
 class CsvDocumentBackend(DeclarativeDocumentBackend):
     def __init__(self, in_doc: "InputDocument", path_or_stream: Union[BytesIO, Path]):
+        _log.debug(
+            f"Initializing CsvDocumentBackend with path_or_stream: {path_or_stream}"
+        )
+        _log.debug(f"in_doc: {in_doc}")
+
         super().__init__(in_doc, path_or_stream)
         self.rows: List[List[str]] = []
         self.valid = False
@@ -35,7 +40,7 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
         try:
             # Load and detect CSV dialect
             if isinstance(self.path_or_stream, Path):
-                # First detect the encoding
+                _log.debug(f"Path: {self.path_or_stream}")
                 with self.path_or_stream.open(mode="rb") as file:
                     raw_content = file.read()
                     self.encoding = self._detect_encoding(raw_content)
@@ -51,7 +56,7 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
                     self.rows = self._parse_csv(content, dialect)
 
             elif isinstance(self.path_or_stream, BytesIO):
-                # Convert BytesIO to StringIO for CSV reading
+                _log.debug(f"BytesIO: {self.path_or_stream}")
                 raw_content = self.path_or_stream.read()
                 self.encoding = self._detect_encoding(raw_content)
                 content = raw_content.decode(self.encoding)
@@ -117,6 +122,9 @@ class CsvDocumentBackend(DeclarativeDocumentBackend):
         """
         Parse CSV content handling various edge cases.
         """
+        _log.debug(f"Parsing CSV content with dialect delimiter: {dialect.delimiter}")
+        _log.debug(f"First 200 characters of content: {content[:200]}")
+
         rows = []
         reader = csv.reader(StringIO(content), dialect=dialect)
         max_cols = 0
