@@ -6,6 +6,7 @@
 
 # Docowling
 
+[![PyPI Downloads](https://static.pepy.tech/badge/docowling/month)](https://pepy.tech/projects/docowling)
 [![Docs](https://img.shields.io/badge/docs-live-brightgreen)](https://github.com/mouraworks/docowling/)
 [![PyPI version](https://img.shields.io/pypi/v/docowling)](https://pypi.org/project/docowling/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/docowling)](https://pypi.org/project/docowling/)
